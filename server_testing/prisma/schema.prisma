@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  user_id  String  @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name  String
+  chores  Json?
+  houses House[]
+}
+
+model House {
+  house_id  Int  @id @default(autoincrement())
+  participants  User[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  chores  Json?
+  house_manager String
+  house_name String
+}
+
+model Chore {
+  chore_id  Int @id @default(autoincrement())
+  icon  Json
+  title String
+  createdAt DateTime  @default(now())
+  time  DateTime?
+}
