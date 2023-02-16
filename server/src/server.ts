@@ -1,8 +1,5 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { User } from "./User";
-import { House } from "./House";
-import { Chore } from "./Chore";
 
 const prisma = new PrismaClient();
 
@@ -12,7 +9,7 @@ const app: Application = express();
 app.use(express.json());
 
 // ----- users -----//
-app.post("/adduser", async (req: Request, res: Response) => {
+app.post("/users", async (req: Request, res: Response) => {
 	const { name } = req.body;
 	console.log(name);
 
@@ -28,20 +25,22 @@ app.post("/adduser", async (req: Request, res: Response) => {
 	}
 });
 
-app.get("/users/:id", async (req: Request, res: Response) => {
-	try {
-		const { id } = req.params;
-		const user = await prisma.user.findUnique({
-			where: {
-				id: String(id),
-			},
-			include: { houses: true, chores: true },
-		});
-		res.status(200).json(user);
-	} catch (error) {
-		res.status(404).json("user not found");
-	}
-});
+export const getUserById = () => {
+	app.get("/users/:id", async (req: Request, res: Response) => {
+		try {
+			const { id } = req.params;
+			const user = await prisma.user.findUnique({
+				where: {
+					id: String(id),
+				},
+				include: { houses: true, chores: true },
+			});
+			res.status(200).json(user);
+		} catch (error) {
+			res.status(404).json("user not found");
+		}
+	});
+};
 
 app.delete("/users/:id", async (req: Request, res: Response) => {
 	try {
@@ -63,17 +62,19 @@ app.delete("/users/:id", async (req: Request, res: Response) => {
 	}
 });
 
-app.get("/users", async (req: Request, res: Response) => {
-	try {
-		const users = await prisma.user.findMany({});
-		res.status(200).json(users);
-	} catch (error) {
-		res.status(500).json({ message: "request unsuccessful" });
-	}
-});
+export const getAllUsers = () => {
+	app.get("/users", async (req: Request, res: Response) => {
+		try {
+			const users = await prisma.user.findMany({});
+			res.status(200).json(users);
+		} catch (error) {
+			res.status(500).json({ message: "request unsuccessful" });
+		}
+	});
+};
 
 // ----- houses -----//
-app.post("/addhouse", async (req: Request, res: Response) => {
+app.post("/houses", async (req: Request, res: Response) => {
 	try {
 		const { houseName, ownerId } = req.body;
 		const house = await prisma.house.create({
@@ -150,7 +151,7 @@ app.patch("/houses/:id", async (req: Request, res: Response) => {
 });
 
 // ----- chores -----//
-app.post("/addchore", async (req: Request, res: Response) => {
+app.post("/chores", async (req: Request, res: Response) => {
 	try {
 		await prisma.chore.create({
 			data: req.body,
@@ -216,7 +217,7 @@ app.patch("/chores/:id", async (req: Request, res: Response) => {
 });
 
 // ----- houseUser ----- //
-app.post("/addhouseuser", async (req: Request, res: Response) => {
+app.post("/houseuser", async (req: Request, res: Response) => {
 	try {
 		const { userId, houseId } = req.body;
 		await prisma.houseUser.create({
@@ -257,7 +258,7 @@ app.patch(
 );
 
 app.delete(
-	"/removehouseuser/:userId/:houseId",
+	"/houseuser/:userId/:houseId",
 	async (req: Request, res: Response) => {
 		try {
 			const { userId, houseId } = req.params;

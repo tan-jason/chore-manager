@@ -1,0 +1,8 @@
+{
+    "basepath": "/api/v1/",
+    "info": {
+        "name": "Chore Manager",
+        "version": "2.0.0",
+        "env": "dev"
+    }
+}
