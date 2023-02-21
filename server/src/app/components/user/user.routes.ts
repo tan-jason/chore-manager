@@ -1,24 +1,17 @@
-import { Router, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { Router } from "express";
+import * as UserRoutes from "./UserController";
 
 const router = Router();
 
-router.post("/", async (req: Request, res: Response<Object>) => {
-    const { name } = req.body;
-    console.log(name);
+router.post('/', UserRoutes.createUser);
 
-    try {
-        await prisma.user.create({
-            data: {
-                name: name,
-            },
-        });
-        res.status(200).json({ message: "user created successfully" });
-    } catch (error) {
-        res.status(400).json({ message: "there was an issue with your request" });
-    }
-});
+router.get('/', UserRoutes.getAllUsers);
+
+router.get('/:id', UserRoutes.getUserById);
+
+router.patch('/:id');
+
+router.delete('/:id', UserRoutes.deleteUser);
+
 
 export default router;
