@@ -1,44 +1,41 @@
-import { User } from "../user/user.model";
-import { House } from "../house/house.model";
-
 export class Chore {
-    private _id: Number;
-    private _title: string;
-    private _assignee: User;
-    private _house: House;
-	private _time?: Date;
+	private id: Number;
+	private title: string;
+	private userId: string;
+	private houseId: Number;
+	private completionTime?: Date;
 
 	constructor(
 		id: Number,
 		title: string,
-		assignee: User,
-		house: House,
-		time?: Date
+		userId: string,
+		houseId: Number,
+		completionTime?: Date
 	) {
-        this._id = id;
-        this._title = title;
-        this._assignee = assignee;
-        this._house = house;
-        this._time = time;
-    };
+		this.id = id;
+		this.title = title;
+		this.userId = userId;
+		this.houseId = houseId;
+		this.completionTime = completionTime;
+	}
 
-    public get id(): Number {
-        return this._id;
-    }
+	public get getId(): Number {
+		return this.id;
+	}
 
-    public get title(): string {
-        return this._title;
-    }
+	public get getTitle(): string {
+		return this.title;
+	}
 
-    public get assignee(): User {
-        return this._assignee;
-    }
+	public get getUserId(): string {
+		return this.userId;
+	}
 
-    public get house(): House {
-        return this._house;
-    }
+	public get getHouseId(): Number {
+		return this.houseId;
+	}
 
-	public get time(): Date| undefined {
-		return this._time;
+	public get getCompletionTime(): Date | undefined {
+		return this.completionTime;
 	}
 }

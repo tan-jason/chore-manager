@@ -3,40 +3,37 @@ import { House } from "../house/house.model";
 import { HouseUser } from "../houseuser/houseuser.model";
 
 export class User {
-    private _id: string;
-    private _name: string;
-    private _housesOwned: House[];
-    private _chores: Chore[];
-    private _houses: HouseUser[];
+	private id: string;
+	private name: string;
+	private housesOwned: House[];
+	private chores: Chore[];
+	private houses: HouseUser[];
 
-	constructor(
-		id: string,
-		name: string
-	) {
-        this._id = id;
-        this._name = name;
-        this._housesOwned = [];
-        this._chores = [];
-        this._houses = [];
-    };
+	constructor(id: string, name: string) {
+		this.id = id;
+		this.name = name;
+		this.housesOwned = [];
+		this.chores = [];
+		this.houses = [];
+	}
 
-    public get id(): string {
-        return this._id;
-    }
+	public get getId(): string {
+		return this.id;
+	}
 
-    public get name(): string {
-        return this._name;
-    }
+	public get getName(): string {
+		return this.name;
+	}
 
-    public get housesOwned(): House[] {
-        return this._housesOwned;
-    }
+	public get getHousesOwned(): House[] {
+		return this.housesOwned;
+	}
 
-    public get chores(): Chore[] {
-        return this._chores;
-    }
+	public get getChores(): Chore[] {
+		return this.chores;
+	}
 
-    public get houses(): HouseUser[] {
-        return this._houses;
-    }
+	public get getHouses(): HouseUser[] {
+		return this.houses;
+	}
 }

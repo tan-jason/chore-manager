@@ -8,11 +8,9 @@ import express, {
 import { PrismaClient } from "@prisma/client";
 import userRoutes from "./app/components/user/user.routes";
 import houseRoutes from "./app/components/house/house.routes";
-import choreRoutes from './app/components/chore/chore.routes';
-import houseUserRoutes from './app/components/houseuser/houseuser.routes';
-import { CHORES } from "./app/components/chore/ChoreController";
-import { USERS } from "./app/components/user/UserController";
-import { HOUSES } from "./app/components/house/HouseController";
+import choreRoutes from "./app/components/chore/chore.routes";
+import houseUserRoutes from "./app/components/houseuser/houseuser.routes";
+import authRoutes from "./app/middleware/auth.routes";
 
 const prisma = new PrismaClient();
 
@@ -32,10 +30,13 @@ app.use("/users", userRoutes);
 app.use("/houses", houseRoutes);
 
 // ----- chores -----//
-app.use("/chores", choreRoutes)
+app.use("/chores", choreRoutes);
 
 // ----- houseUser ----- //
 app.use("/houseuser", houseUserRoutes);
+
+// ----- auth -----//
+app.use("/login", authRoutes);
 
 // app.on('starting server', () => {
 // 	const users = prisma.user.findMany({});

@@ -1,25 +1,40 @@
 import { RequestHandler, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { User } from "./user.model";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
-
-export const USERS: User[] = [];
 
 export const createUser: RequestHandler = async (
 	req: Request,
 	res: Response
 ) => {
-	const { name } = req.body;
+	const { name, username, password } = req.body;
 
 	try {
 		const user = await prisma.user.create({
 			data: {
 				name: name,
+				username: username,
+				password: password,
 			},
 		});
-		const newUser = new User(user.id, user.name);
-		USERS.push(newUser);
+
+		const token = jwt.sign(
+			{ user_id: user.id, username },
+			process.env.TOKEN_KEY!,
+			{
+				expiresIn: "2h",
+			}
+		);
+		await prisma.user.update({
+			where: {
+				id: user.id,
+			},
+			data: {
+				token: token,
+			},
+		});
 		res.status(200).json({ message: "user created successfully" });
 	} catch (error) {
 		res.status(400).json({ message: "there was an issue with your request" });
@@ -32,10 +47,6 @@ export const deleteUser: RequestHandler = async (
 ) => {
 	try {
 		const { id } = req.params;
-		const userIndex = USERS.findIndex((i) => i.id === id);
-		// if (userIndex < 0) {
-		// 	throw new Error('could not find user');
-		// }
 		await prisma.houseUser.deleteMany({
 			where: {
 				userId: String(id),
@@ -43,19 +54,17 @@ export const deleteUser: RequestHandler = async (
 		});
 		await prisma.chore.updateMany({
 			where: {
-				assigneeId: String(id)
+				userId: String(id),
 			},
 			data: {
-				assigneeId: null,
-			}
+				userId: null,
+			},
 		});
-		//TODO: once make HouseUser model, remove user from HouseUsers
 		await prisma.user.delete({
 			where: {
 				id: String(id),
 			},
 		});
-		// USERS.splice(userIndex, 1);
 		res.status(200).json({ message: "user deleted" });
 	} catch (error) {
 		res.status(404).json({ message: "request unsuccessful" });
@@ -77,10 +86,10 @@ export const getAllUsers: RequestHandler = async (
 };
 
 export const getUserById: RequestHandler = async (
-    req: Request,
-    res: Response,
+	req: Request,
+	res: Response
 ) => {
-    try {
+	try {
 		const { id } = req.params;
 		const user = await prisma.user.findUnique({
 			where: {
@@ -92,4 +101,4 @@ export const getUserById: RequestHandler = async (
 	} catch (error) {
 		res.status(404).json("user not found");
 	}
-}
+};

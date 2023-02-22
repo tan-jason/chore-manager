@@ -2,29 +2,25 @@ import { User } from "../user/user.model";
 import { House } from "../house/house.model";
 
 export class HouseUser {
-    private _id: Number;
-    private _user: User;
-    private _house: House;
+	private id: Number;
+	private user: User;
+	private house: House;
 
-	constructor(
-		id: Number,
-		user: User,
-        house: House
-	) {
-        this._id = id;
-        this._user = user;
-        this._house = house;
-    };
+	constructor(id: Number, user: User, house: House) {
+		this.id = id;
+		this.user = user;
+		this.house = house;
+	}
 
-    public get id(): Number {
-        return this._id;
-    }
+	public get getId(): Number {
+		return this.id;
+	}
 
-    public get user(): User {
-        return this._user;
-    }
+	public get getUser(): User {
+		return this.user;
+	}
 
-    public get house(): House {
-        return this._house;
-    }
+	public get getHouse(): House {
+		return this.house;
+	}
 }
