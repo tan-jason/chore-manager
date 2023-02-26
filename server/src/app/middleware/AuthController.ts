@@ -1,4 +1,4 @@
-import { RequestHandler, Request, Response } from "express";
+import { RequestHandler, Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
@@ -42,5 +42,27 @@ export const loginUser: RequestHandler = async (
 		}
 	} catch (error) {
 		res.status(404).json({ message: "an error has occurred" });
+	}
+};
+
+export const verifyToken = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const token =
+		req.body.token || req.query.token || req.headers["x-access-token"];
+
+	if (!token) {
+		res.status(403).json({ message: "required token for authentication" });
+	}
+
+	try {
+		const decodedToken = jwt.verify(token, process.env.TOKEN_KEY!);
+		req.user = decodedToken;
+
+		next();
+	} catch (error) {
+		res.status(422).json({ message: "an error has occurred" });
 	}
 };

@@ -5,14 +5,12 @@ import express, {
 	Request,
 	Response,
 } from "express";
-import { PrismaClient } from "@prisma/client";
 import userRoutes from "./app/components/user/user.routes";
 import houseRoutes from "./app/components/house/house.routes";
 import choreRoutes from "./app/components/chore/chore.routes";
 import houseUserRoutes from "./app/components/houseuser/houseuser.routes";
 import authRoutes from "./app/middleware/auth.routes";
-
-const prisma = new PrismaClient();
+import { verifyToken } from "./app/middleware/AuthController";
 
 const port = process.env.PORT;
 const app: Application = express();
@@ -38,9 +36,9 @@ app.use("/houseuser", houseUserRoutes);
 // ----- auth -----//
 app.use("/login", authRoutes);
 
-// app.on('starting server', () => {
-// 	const users = prisma.user.findMany({});
-// })
+app.post("/welcome", verifyToken, (req: Request, res: Response) => {
+	res.status(200).json({ message: "welcome!" });
+});
 
 app.listen(port, () =>
 	console.log(`server running on http://localhost:${port}`)
