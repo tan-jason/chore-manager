@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,36 +9,35 @@ datasource db {
 }
 
 model User {
-  id          String      @id @default(uuid())
-  username    String      @unique
-  name        String
-  password    String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  housesOwned House[]
-  chores      Chore[]
-  houses      HouseUser[]
+  name        String
+  id          String      @id @default(uuid())
+  password    String
+  username    String      @unique
   token       String?
+  chores      Chore[]
+  housesOwned House[]
+  houses      HouseUser[]
 }
 
 model House {
-  id         Int         @id @default(autoincrement())
-  houseName  String
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  houseOwner User?       @relation(fields: [ownerId], references: [id])
+  houseName  String
+  id         Int         @id @default(autoincrement())
   ownerId    String?
   chores     Chore[]
+  houseOwner User?       @relation(fields: [ownerId], references: [id])
   users      HouseUser[]
 }
 
 model HouseUser {
-  id     Int    @default(autoincrement())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
+  userId  String
   houseId Int
-  house   House @relation(fields: [houseId], references: [id])
+  id      Int    @default(autoincrement())
+  house   House  @relation(fields: [houseId], references: [id])
+  user    User   @relation(fields: [userId], references: [id])
 
   @@id([userId, houseId])
 }
@@ -52,8 +48,8 @@ model Chore {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   time      DateTime?
-  user      User?     @relation(fields: [userId], references: [id])
+  houseId   Int?
   userId    String?
   house     House?    @relation(fields: [houseId], references: [id])
-  houseId   Int?
+  user      User?     @relation(fields: [userId], references: [id])
 }

@@ -9,7 +9,7 @@ router.get('/', UserRoutes.getAllUsers);
 
 router.get('/:id', UserRoutes.getUserById);
 
-router.patch('/:id');
+router.patch('/:id', UserRoutes.updateUser);
 
 router.delete('/:id', UserRoutes.deleteUser);
 

@@ -11,12 +11,14 @@ export const createUser: RequestHandler = async (
 ) => {
 	const { name, username, password } = req.body;
 
+	const salt = bcrypt.genSaltSync(10);
+	const encryptedPassword = bcrypt.hashSync(password, salt);
 	try {
 		const user = await prisma.user.create({
 			data: {
 				name: name,
 				username: username,
-				password: password,
+				password: String(encryptedPassword),
 			},
 		});
 
@@ -100,5 +102,31 @@ export const getUserById: RequestHandler = async (
 		res.status(200).json(user);
 	} catch (error) {
 		res.status(404).json("user not found");
+	}
+};
+
+export const updateUser: RequestHandler = async (
+	req: Request,
+	res: Response
+) => {
+	try {
+		const { id } = req.params;
+		const data = req.body;
+
+		if (data.password) {
+			const salt = bcrypt.genSaltSync(10);
+			data.password = String(bcrypt.hashSync(data.password, salt));
+		}
+
+		await prisma.user.update({
+			where: {
+				id: String(id),
+			},
+			data: req.body,
+			include: { houses: true, chores: true, housesOwned: true },
+		});
+		res.status(200).json({ message: 'user updated' });
+	} catch (err) {
+		res.status(400).json({ message: 'an error occurred' });
 	}
 };
