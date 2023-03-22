@@ -1,0 +1,68 @@
+import { StyleSheet } from "react-native";
+
+export const commonStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  header: {
+    fontWeight: "bold",
+    fontSize: 24,
+    paddingHorizontal: 20,
+    paddingTop: 80,
+    marginBottom: 16,
+  },
+  submitButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 80,
+    borderRadius: 7,
+    elevation: 3,
+    backgroundColor: "black",
+    alignSelf: "center",
+    marginRight: 20,
+    marginTop: 20,
+  },
+  submitText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+  errorText: {
+    fontSize: 16,
+    lineHeight: 21,
+    color: "red",
+    letterSpacing: 0.25,
+    alignSelf: "center",
+    marginRight: 20,
+    marginTop: 20,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: "80%",
+  },
+  linkText: {
+    fontSize: 16,
+    lineHeight: 21,
+    color: "cyan",
+    letterSpacing: 0.25,
+    alignSelf: "center",
+    marginRight: 20,
+    marginTop: 20,
+  },
+  normalText: {
+    fontSize: 14,
+    lineHeight: 21,
+    color: "black",
+    letterSpacing: 0.25,
+    alignSelf: "center",
+    marginRight: 20,
+    marginTop: 20,
+  },
+});

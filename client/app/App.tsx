@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import CreateUserView from "./components/view/CreateUserView";
 import LoginView from "./components/view/LoginView";
+import WelcomeView from "./components/view/WelcomeView";
+import { commonStyles } from "./styles/commonStyles";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [logIn, setLogIn] = useState(true);
+  const [createUser, setCreateUser] = useState(false);
+  const [welcome, setWelcome] = useState(false);
+  const [username, setUsername] = useState("");
+  const [inHomePage, setInHomePage] = useState(false);
 
   // useEffect(() => {
   //   fetch("/welcome")
@@ -15,12 +18,44 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {!loggedIn && (
-        <LoginView setLoggedIn={setLoggedIn} />
+      {welcome && (
+        <WelcomeView
+          setUsername={setUsername}
+          setCreateUser={setCreateUser}
+          onClose={() => setWelcome(false)}
+        />
       )}
-      {loggedIn && (
+      {createUser && (
+        <CreateUserView
+          onClose={(name) => {
+            setCreateUser(false);
+            setUsername(name ?? "");
+          }}
+          onBack={() => {
+            setCreateUser(false);
+            setWelcome(true);
+          }}
+          setHomePage={setInHomePage}
+        />
+      )}
+      {logIn && (
+        <LoginView
+          setLoggedIn={(name) => {
+            setInHomePage(true);
+            setLogIn(false);
+            setUsername(name || "");
+          }}
+          username={username}
+        />
+      )}
+      {inHomePage && (
+        <View style={commonStyles.container}>
+          <Text style={commonStyles.header}>{`Welcome ${username}`}</Text>
+        </View>
+      )}
+      {/* {loggedIn && (
         <Text style={styles.header}>Logged In Successfully</Text>
-      )}
+      )} */}
     </View>
   );
 }
@@ -74,6 +109,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     alignSelf: "center",
     marginRight: 20,
-    marginTop: 20
+    marginTop: 20,
   },
 });
