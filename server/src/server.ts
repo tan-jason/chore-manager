@@ -1,9 +1,9 @@
 import express, {
-	Application,
-	json,
-	NextFunction,
-	Request,
-	Response,
+  Application,
+  json,
+  NextFunction,
+  Request,
+  Response,
 } from "express";
 import userRoutes from "./app/components/user/user.routes";
 import houseRoutes from "./app/components/house/house.routes";
@@ -12,13 +12,20 @@ import houseUserRoutes from "./app/components/houseuser/houseuser.routes";
 import authRoutes from "./app/middleware/auth.routes";
 import { verifyToken } from "./app/middleware/AuthController";
 
+const cors = require("cors");
 const port = process.env.PORT;
 const app: Application = express();
 
 app.use(json());
 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	res.status(500).json({ message: err.message });
+  res.status(500).json({ message: err.message });
 });
 
 // ----- users -----//
@@ -37,9 +44,9 @@ app.use("/houseuser", houseUserRoutes);
 app.use("/login", authRoutes);
 
 app.post("/welcome", verifyToken, (req: Request, res: Response) => {
-	res.status(200).json({ message: "welcome!" });
+  res.status(200).json({ message: "welcome!", username: String(req.user) });
 });
 
 app.listen(port, () =>
-	console.log(`server running on http://localhost:${port}`)
+  console.log(`server running on http://localhost:${port}`)
 );

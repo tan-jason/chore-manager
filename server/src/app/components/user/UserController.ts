@@ -26,7 +26,7 @@ export const createUser: RequestHandler = async (
       { user_id: user.id, username },
       process.env.TOKEN_KEY!,
       {
-        expiresIn: "2h",
+        expiresIn: "2w",
       }
     );
     await prisma.user.update({
