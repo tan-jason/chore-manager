@@ -7,24 +7,16 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
+import { Link } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
-type Props = {
-  onClose: (name?: string) => void;
-  onBack: () => void;
-  setHomePage: (state: boolean) => void;
-};
-
-const CreateUserView = ({
-  onClose,
-  onBack,
-  setHomePage,
-}: Props): JSX.Element => {
+const CreateUserView = (): JSX.Element => {
   const [username, setUsernameInput] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userCreated, setUserCreated] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -44,11 +36,8 @@ const CreateUserView = ({
           name: String(name),
         }),
       }).then((res) => {
-        console.log(`${username} ${password} ${name}`);
-        console.log(JSON.stringify(res));
         if (res.ok) {
-          setHomePage(true);
-          onClose(name);
+          setUserCreated(true);
         }
       });
     } catch (error) {
@@ -121,17 +110,14 @@ const CreateUserView = ({
         {loading ? (
           <ActivityIndicator size="small" color="white" />
         ) : (
-          <Text style={commonStyles.submitText}>Submit</Text>
+          <Link to={userCreated ? `/login/${username}` : "/createUser"}>
+            <Text style={commonStyles.submitText}>Submit</Text>
+          </Link>
         )}
       </Pressable>
-      <Text
-        style={commonStyles.normalText}
-        onPress={() => {
-          onBack();
-        }}
-      >
-        Back
-      </Text>
+      <Link to="/">
+        <Text style={commonStyles.normalText}>Back</Text>
+      </Link>
     </View>
   );
 };

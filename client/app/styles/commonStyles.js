@@ -5,6 +5,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  centerContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+  },
   header: {
     fontWeight: "bold",
     fontSize: 24,
@@ -14,15 +19,15 @@ export const commonStyles = StyleSheet.create({
   },
   submitButton: {
     alignItems: "center",
-    justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 80,
+    paddingHorizontal: 20,
     borderRadius: 7,
     elevation: 3,
     backgroundColor: "black",
     alignSelf: "center",
     marginRight: 20,
     marginTop: 20,
+    width: 250,
   },
   submitText: {
     fontSize: 16,
@@ -50,7 +55,7 @@ export const commonStyles = StyleSheet.create({
   linkText: {
     fontSize: 16,
     lineHeight: 21,
-    color: "cyan",
+    color: "#3366CC",
     letterSpacing: 0.25,
     alignSelf: "center",
     marginRight: 20,

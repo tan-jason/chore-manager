@@ -7,18 +7,17 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useNavigate, useParams } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
-type Props = {
-  setLoggedIn: (name?: string) => void;
-  username: string;
-};
-
-const LoginView = ({ setLoggedIn, username }: Props): JSX.Element => {
-  const [usernameInput, setUsernameInput] = useState("");
+const LoginView = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [incorrectPassword, setIncorrectPassword] = useState(false);
+
+  const { username } = useParams();
+
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -30,14 +29,14 @@ const LoginView = ({ setLoggedIn, username }: Props): JSX.Element => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: usernameInput,
+          username: username,
           password: password,
         }),
       }).then((response) => {
         const resStatus = response.status;
         if (resStatus === 200) {
-          setLoggedIn(usernameInput);
           setIncorrectPassword(false);
+          navigate("/home");
         } else {
           setIncorrectPassword(true);
         }
@@ -50,15 +49,8 @@ const LoginView = ({ setLoggedIn, username }: Props): JSX.Element => {
 
   return (
     <View style={commonStyles.container}>
-      <Text style={commonStyles.header}>Log In</Text>
+      <Text style={commonStyles.header}>{`Welcome ${username}`}</Text>
       <View style={styles.loginContainer}>
-        <TextInput
-          placeholder="Username"
-          style={commonStyles.input}
-          value={usernameInput}
-          onChangeText={setUsernameInput}
-          autoCapitalize="none"
-        />
         <TextInput
           placeholder="Password"
           style={commonStyles.input}
@@ -80,7 +72,7 @@ const LoginView = ({ setLoggedIn, username }: Props): JSX.Element => {
         )}
       </Pressable>
       {incorrectPassword && (
-        <Text style={commonStyles.errorText}>Incorrect username/password</Text>
+        <Text style={commonStyles.errorText}>Incorrect password</Text>
       )}
     </View>
   );

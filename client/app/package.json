@@ -14,13 +14,27 @@
     "expo-cli": "^6.3.2",
     "expo-status-bar": "~1.4.4",
     "express": "^4.18.2",
+    "path": "^0.12.7",
     "react": "^18.2.0",
-    "react-native": "^0.71.3"
+    "react-native": "^0.71.3",
+    "react-native-fs": "^2.20.0",
+    "react-native-randombytes": "^3.6.1",
+    "react-router-native": "^6.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.0.14",
     "typescript": "^4.9.4"
   },
-  "private": true
+  "private": true,
+  "react-native": {
+    "crypto": "react-native-crypto",
+    "https": "https-browserify",
+    "fs": "react-native-level-fs"
+  },
+  "browser": {
+    "crypto": "react-native-crypto",
+    "https": "https-browserify",
+    "fs": "react-native-level-fs"
+  }
 }

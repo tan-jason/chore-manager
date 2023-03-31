@@ -7,19 +7,14 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
+import { Link } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
-type Props = {
-  setUsername: (state: string) => void;
-  setCreateUser: (state: boolean) => void;
-  onClose: () => void;
-};
+// type Props = {
+//   onClose: () => void;
+// };
 
-const WelcomeView = ({
-  setUsername,
-  setCreateUser,
-  onClose,
-}: Props): JSX.Element => {
+const WelcomeView = (): JSX.Element => {
   const [userFound, setUserFound] = useState(false);
   const [username, setUsernameInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,9 +32,7 @@ const WelcomeView = ({
       }).then((res) => {
         if (res.ok) {
           setUsernotFound(false);
-          setUsername(username);
           setUserFound(true);
-          onClose();
         } else if (res.status === 400) {
           setUsernotFound(true);
         }
@@ -78,18 +71,14 @@ const WelcomeView = ({
         {loading ? (
           <ActivityIndicator size="small" color="white" />
         ) : (
-          <Text style={commonStyles.submitText}>Submit</Text>
+          <Link to={userFound ? `/login/${username}` : "/"}>
+            <Text style={commonStyles.submitText}>Submit</Text>
+          </Link>
         )}
       </Pressable>
-      <Text
-        style={commonStyles.linkText}
-        onPress={() => {
-          setCreateUser(true);
-          onClose();
-        }}
-      >
-        Create an account
-      </Text>
+      <Link to={"/createUser"}>
+        <Text style={commonStyles.linkText}>Create an account</Text>
+      </Link>
     </View>
   );
 };

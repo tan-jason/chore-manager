@@ -4,59 +4,46 @@ import CreateUserView from "./components/view/CreateUserView";
 import LoginView from "./components/view/LoginView";
 import WelcomeView from "./components/view/WelcomeView";
 import { commonStyles } from "./styles/commonStyles";
+import { NativeRouter, Route, Routes } from "react-router-native";
+import HomePageView from "./components/view/HomePage";
 
 export default function App() {
-  const [logIn, setLogIn] = useState(true);
-  const [createUser, setCreateUser] = useState(false);
-  const [welcome, setWelcome] = useState(false);
+  const [sessionActive, setSessionActive] = useState(false);
   const [username, setUsername] = useState("");
-  const [inHomePage, setInHomePage] = useState(false);
 
-  // useEffect(() => {
-  //   fetch("/welcome")
-  // }, [])
+  useEffect(() => {
+    try {
+      fetch("http://localhost:8080/welcome", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        if (res.ok) {
+          res.json().then((data) => {
+            setSessionActive(true);
+            setUsername(data.username);
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
-    <View style={styles.container}>
-      {welcome && (
-        <WelcomeView
-          setUsername={setUsername}
-          setCreateUser={setCreateUser}
-          onClose={() => setWelcome(false)}
+    <NativeRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={sessionActive ? <HomePageView /> : <WelcomeView />}
         />
-      )}
-      {createUser && (
-        <CreateUserView
-          onClose={(name) => {
-            setCreateUser(false);
-            setUsername(name ?? "");
-          }}
-          onBack={() => {
-            setCreateUser(false);
-            setWelcome(true);
-          }}
-          setHomePage={setInHomePage}
-        />
-      )}
-      {logIn && (
-        <LoginView
-          setLoggedIn={(name) => {
-            setInHomePage(true);
-            setLogIn(false);
-            setUsername(name || "");
-          }}
-          username={username}
-        />
-      )}
-      {inHomePage && (
-        <View style={commonStyles.container}>
-          <Text style={commonStyles.header}>{`Welcome ${username}`}</Text>
-        </View>
-      )}
-      {/* {loggedIn && (
-        <Text style={styles.header}>Logged In Successfully</Text>
-      )} */}
-    </View>
+        <Route path="/login/:username" element={<LoginView />} />
+        <Route path="/createUser" element={<CreateUserView />} />
+        <Route path="/home" element={<HomePageView />} />
+      </Routes>
+    </NativeRouter>
   );
 }
 
