@@ -2,6 +2,7 @@ import { RequestHandler, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import fs from "fs";
 
 const prisma = new PrismaClient();
 
@@ -37,6 +38,17 @@ export const createUser: RequestHandler = async (
         token: token,
       },
     });
+
+    fs.writeFile(
+      "./src/app/middleware/jwt.txt",
+      String(token),
+      "utf8",
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
     res.status(200).json({ message: "user created successfully" });
   } catch (error) {
     res.status(400).json({ message: "there was an issue with your request" });
@@ -84,6 +96,28 @@ export const getAllUsers: RequestHandler = async (
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "request unsuccessful" });
+  }
+};
+
+export const getUserById: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: String(id),
+      },
+      include: { houses: true, chores: true, housesOwned: true },
+    });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(400).json({ message: "user not found" });
+    }
+  } catch (error) {
+    res.status(404).json({ message: "user not found" });
   }
 };
 

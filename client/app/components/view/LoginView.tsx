@@ -36,7 +36,7 @@ const LoginView = (): JSX.Element => {
         const resStatus = response.status;
         if (resStatus === 200) {
           setIncorrectPassword(false);
-          navigate("/home");
+          navigate(`/home/${username}`);
         } else {
           setIncorrectPassword(true);
         }

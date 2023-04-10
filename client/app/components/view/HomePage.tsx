@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,43 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
+import { Link, useNavigate, useParams } from "react-router-native";
+import { getUserByUsername } from "../../AppRoutes/AppRoutes";
 import { commonStyles } from "../../styles/commonStyles";
 
-const HomePageView = (): JSX.Element => {
+type Props = {
+  username: string;
+};
+
+const HomePageView = ({ username }: Props): JSX.Element => {
+  const [userId, setUserId] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleNavigate = async (view: string) => {
+    fetch(`http://localhost:8080/users/v1/${username}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        res.json().then((data) => {
+          setUserId(data.id);
+        });
+      })
+      .catch((err) => console.log(err));
+
+    if (view === "create") {
+      navigate(`/mainmenu/createHouse/${userId}`);
+    } else if (view === "join") {
+      navigate(`/mainmenu/joinHouse/${username}`);
+    } else if (view === "houses") {
+      navigate(`/mainmenu/houses/${username}`);
+    }
+  };
+
   return (
     <View style={commonStyles.centerContainer}>
       <Text style={{ ...commonStyles.header, paddingTop: 160 }}>
@@ -18,7 +52,10 @@ const HomePageView = (): JSX.Element => {
 
       <View style={styles.welcomeContainer}>
         <View style={styles.entryContainer}>
-          <Pressable style={commonStyles.submitButton}>
+          <Pressable
+            style={commonStyles.submitButton}
+            onPress={() => handleNavigate("create")}
+          >
             <Text style={commonStyles.submitText}>Create a House</Text>
           </Pressable>
         </View>
@@ -46,7 +83,6 @@ const styles = StyleSheet.create({
   },
   entryContainer: {
     paddingTop: 50,
-    paddingLeft: 20,
     marginBottom: 16,
     alignItems: "flex-start",
     flexDirection: "row",

@@ -1,62 +1,71 @@
 import React, { useState } from "react";
 import {
   View,
+  StyleSheet,
   Text,
   TextInput,
-  StyleSheet,
-  Pressable,
   ActivityIndicator,
+  Pressable,
 } from "react-native";
-import { Link, useNavigate } from "react-router-native";
+import { useNavigate, useParams } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
-const WelcomeView = (): JSX.Element => {
-  const [username, setUsernameInput] = useState("");
+const CreateHouseView = (): JSX.Element => {
+  const [houseName, setHouseName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [usernotFound, setUsernotFound] = useState(false);
+  const [invalidHouseName, setInvalidHouseName] = useState(false);
+
+  const { userId } = useParams();
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      fetch(`http://localhost:8080/users/v1/${username}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }).then((res) => {
-        if (res.ok) {
-          setUsernotFound(false);
-          res.json().then((data) => navigate(`/login/${data.username}`));
-        } else if (res.status === 400) {
-          setUsernotFound(true);
-        }
-      });
-    } catch (error) {
-      console.log(error);
+    if (!houseName) {
+      setInvalidHouseName(true);
+      return;
     }
-    setLoading(false);
+    setLoading(true);
+    fetch("http://localhost:8080/houses", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        houseName: String(houseName),
+        ownerId: String(userId),
+      }),
+    })
+      .then((response) => {
+        const resStatus = response.status;
+        if (resStatus === 200) {
+          response.json().then((data) => {
+            navigate(`/home/${data.houseId}`, {
+              state: { houseName: houseName },
+            });
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <View style={commonStyles.container}>
       <View style={styles.welcomeContainer}>
         <Text style={{ ...commonStyles.header, paddingHorizontal: 10 }}>
-          Chore Manager
+          Create a House
         </Text>
         <TextInput
-          placeholder="Enter your username"
+          placeholder="Enter your house name"
           style={commonStyles.input}
-          value={username}
-          onChangeText={setUsernameInput}
+          value={houseName}
+          onChangeText={setHouseName}
           autoCapitalize="none"
         />
       </View>
-      {usernotFound && (
+      {invalidHouseName && (
         <Text style={{ ...commonStyles.errorText, paddingHorizontal: 20 }}>
-          User not found, please create an account or re-enter username
+          You must enter a house name
         </Text>
       )}
 
@@ -71,9 +80,6 @@ const WelcomeView = (): JSX.Element => {
           <Text style={commonStyles.submitText}>Submit</Text>
         )}
       </Pressable>
-      <Link to={"/createUser"}>
-        <Text style={commonStyles.linkText}>Create an account</Text>
-      </Link>
     </View>
   );
 };
@@ -86,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeView;
+export default CreateHouseView;

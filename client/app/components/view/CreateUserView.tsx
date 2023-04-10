@@ -7,7 +7,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from "react-native";
-import { Link } from "react-router-native";
+import { Link, useNavigate } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
 const CreateUserView = (): JSX.Element => {
@@ -16,7 +16,8 @@ const CreateUserView = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userCreated, setUserCreated] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -37,7 +38,7 @@ const CreateUserView = (): JSX.Element => {
         }),
       }).then((res) => {
         if (res.ok) {
-          setUserCreated(true);
+          navigate(`/home/${username}`);
         }
       });
     } catch (error) {
@@ -110,9 +111,7 @@ const CreateUserView = (): JSX.Element => {
         {loading ? (
           <ActivityIndicator size="small" color="white" />
         ) : (
-          <Link to={userCreated ? `/login/${username}` : "/createUser"}>
-            <Text style={commonStyles.submitText}>Submit</Text>
-          </Link>
+          <Text style={commonStyles.submitText}>Submit</Text>
         )}
       </Pressable>
       <Link to="/">
