@@ -9,10 +9,13 @@ export const createHouse: RequestHandler = async (
 ) => {
   try {
     const { houseName, ownerId } = req.body;
+
+    const houseCode = Math.random().toString(36).substring(6);
     const house = await prisma.house.create({
       data: {
         houseName: houseName,
         ownerId: ownerId,
+        houseCode: houseCode,
       },
     });
     await prisma.houseUser.create({
@@ -21,9 +24,10 @@ export const createHouse: RequestHandler = async (
         houseId: house.id,
       },
     });
-    res
-      .status(200)
-      .json({ message: "house created successfully", houseId: house.id });
+    res.status(200).json({
+      message: "house created successfully",
+      houseCode: house.houseCode,
+    });
   } catch (error) {
     res.status(400).json({ message: "there was an issue with your request" });
   }
@@ -50,6 +54,24 @@ export const getHouseById: RequestHandler = async (
     const house = await prisma.house.findUnique({
       where: {
         id: Number(id),
+      },
+      include: { houseOwner: true, chores: true, users: true },
+    });
+    res.status(200).json(house);
+  } catch (error) {
+    res.status(404).json("house not found");
+  }
+};
+
+export const getHouseByHouseCode: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { houseCode } = req.params;
+    const house = await prisma.house.findUnique({
+      where: {
+        houseCode: String(houseCode),
       },
       include: { houseOwner: true, chores: true, users: true },
     });

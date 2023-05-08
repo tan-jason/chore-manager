@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -10,17 +10,17 @@ import {
 import { useLocation, useParams } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
-const CreateHouseView = (): JSX.Element => {
+const ViewHome = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
 
-  const { userId } = useParams();
-  const { state } = useLocation();
+  const { houseCode } = useParams();
+  const location = useLocation();
 
   return (
     <View style={commonStyles.container}>
       <View style={styles.welcomeContainer}>
         <Text style={{ ...commonStyles.header, paddingHorizontal: 10 }}>
-          {state.houseName}
+          {location.state.houseName}
         </Text>
       </View>
       {/* {usernotFound && (
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateHouseView;
+export default ViewHome;

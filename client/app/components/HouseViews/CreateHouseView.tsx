@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Pressable,
 } from "react-native";
-import { useNavigate, useParams } from "react-router-native";
+import { useNavigate, useParams, Link } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 
 const CreateHouseView = (): JSX.Element => {
@@ -40,7 +40,7 @@ const CreateHouseView = (): JSX.Element => {
         const resStatus = response.status;
         if (resStatus === 200) {
           response.json().then((data) => {
-            navigate(`/home/${data.houseId}`, {
+            navigate(`/home/${data.houseCode}`, {
               state: { houseName: houseName },
             });
           });
@@ -80,6 +80,9 @@ const CreateHouseView = (): JSX.Element => {
           <Text style={commonStyles.submitText}>Submit</Text>
         )}
       </Pressable>
+      <Link to={`/mainmenu`}>
+        <Text style={commonStyles.normalText}>Back</Text>
+      </Link>
     </View>
   );
 };

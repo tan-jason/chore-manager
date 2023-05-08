@@ -16,8 +16,6 @@ type Props = {
 };
 
 const HomePageView = ({ username }: Props): JSX.Element => {
-  const [userId, setUserId] = useState("");
-
   const navigate = useNavigate();
 
   const handleNavigate = async (view: string) => {
@@ -30,18 +28,16 @@ const HomePageView = ({ username }: Props): JSX.Element => {
     })
       .then((res) => {
         res.json().then((data) => {
-          setUserId(data.id);
+          if (view === "create") {
+            navigate(`/mainmenu/createHouse/${data.id}`);
+          } else if (view === "join") {
+            navigate(`/mainmenu/joinHouse/${data.id}`);
+          } else if (view === "houses") {
+            navigate(`/mainmenu/houses/${data.id}`);
+          }
         });
       })
       .catch((err) => console.log(err));
-
-    if (view === "create") {
-      navigate(`/mainmenu/createHouse/${userId}`);
-    } else if (view === "join") {
-      navigate(`/mainmenu/joinHouse/${username}`);
-    } else if (view === "houses") {
-      navigate(`/mainmenu/houses/${username}`);
-    }
   };
 
   return (
@@ -61,7 +57,10 @@ const HomePageView = ({ username }: Props): JSX.Element => {
         </View>
 
         <View style={styles.entryContainer}>
-          <Pressable style={commonStyles.submitButton}>
+          <Pressable
+            style={commonStyles.submitButton}
+            onPress={() => handleNavigate("join")}
+          >
             <Text style={commonStyles.submitText}>Join a House</Text>
           </Pressable>
         </View>

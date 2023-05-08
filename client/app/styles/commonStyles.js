@@ -5,6 +5,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  headerContainer: {
+    paddingTop: 50,
+    paddingLeft: 20,
+    alignItems: "flex-start",
+  },
   centerContainer: {
     flex: 1,
     backgroundColor: "#fff",

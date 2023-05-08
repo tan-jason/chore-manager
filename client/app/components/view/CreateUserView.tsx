@@ -21,7 +21,7 @@ const CreateUserView = (): JSX.Element => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    if (confirmPassword !== password) {
+    if (password && confirmPassword !== password) {
       return;
     }
     try {
@@ -38,7 +38,7 @@ const CreateUserView = (): JSX.Element => {
         }),
       }).then((res) => {
         if (res.ok) {
-          navigate(`/home/${username}`);
+          navigate(`/mainmenu`);
         }
       });
     } catch (error) {
@@ -114,9 +114,9 @@ const CreateUserView = (): JSX.Element => {
           <Text style={commonStyles.submitText}>Submit</Text>
         )}
       </Pressable>
-      <Link to="/">
-        <Text style={commonStyles.normalText}>Back</Text>
-      </Link>
+      <Text style={commonStyles.normalText} onPress={() => navigate(-1)}>
+        Back
+      </Text>
     </View>
   );
 };

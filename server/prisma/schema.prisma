@@ -27,6 +27,7 @@ model House {
   houseName  String
   id         Int         @id @default(autoincrement())
   ownerId    String?
+  houseCode  String      @unique
   chores     Chore[]
   houseOwner User?       @relation(fields: [ownerId], references: [id])
   users      HouseUser[]

@@ -6,6 +6,7 @@ import { NativeRouter, Route, Routes } from "react-router-native";
 import HomePageView from "./components/view/HomePage";
 import CreateHouseView from "./components/HouseViews/CreateHouseView";
 import ViewHome from "./components/appflow/ViewHome";
+import JoinHouseView from "./components/HouseViews/JoinHouseView";
 
 export default function App() {
   const [sessionActive, setSessionActive] = useState(false);
@@ -48,14 +49,15 @@ export default function App() {
         <Route path="/login/:username" element={<LoginView />} />
         <Route path="/createUser" element={<CreateUserView />} />
         <Route
-          path="/mainmenu/:username"
+          path="/mainmenu"
           element={<HomePageView username={username} />}
         />
+        <Route path="/mainmenu/joinHouse/:userId" element={<JoinHouseView />} />
         <Route
           path="/mainmenu/createHouse/:userId"
           element={<CreateHouseView />}
         />
-        <Route path="/home/:houseId" element={<ViewHome />} />
+        <Route path="/home/:houseCode" element={<ViewHome />} />
       </Routes>
     </NativeRouter>
   );
