@@ -43,10 +43,10 @@ const HomePageView = ({ username }: Props): JSX.Element => {
   return (
     <View style={commonStyles.centerContainer}>
       <Text style={{ ...commonStyles.header, paddingTop: 160 }}>
-        {`Chore Manager`}
+        Chore Manager
       </Text>
 
-      <View style={styles.welcomeContainer}>
+      <View style={styles.buttonContainer}>
         <View style={styles.entryContainer}>
           <Pressable
             style={commonStyles.submitButton}
@@ -66,7 +66,10 @@ const HomePageView = ({ username }: Props): JSX.Element => {
         </View>
 
         <View style={styles.entryContainer}>
-          <Pressable style={commonStyles.submitButton}>
+          <Pressable
+            style={commonStyles.submitButton}
+            onPress={() => handleNavigate("houses")}
+          >
             <Text style={commonStyles.submitText}>Houses</Text>
           </Pressable>
         </View>
@@ -76,7 +79,7 @@ const HomePageView = ({ username }: Props): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-  welcomeContainer: {
+  buttonContainer: {
     paddingLeft: 20,
     alignItems: "flex-start",
   },

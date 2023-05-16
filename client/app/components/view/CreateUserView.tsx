@@ -16,12 +16,15 @@ const CreateUserView = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setLoading(true);
     if (password && confirmPassword !== password) {
+      setLoading(false);
+      setPasswordError(true);
       return;
     }
     try {
@@ -97,11 +100,11 @@ const CreateUserView = (): JSX.Element => {
           />
         </View>
       </View>
-      {/* {usernotFound && (
+      {passwordError && (
         <Text style={{ ...commonStyles.errorText, paddingHorizontal: 20 }}>
-          User not found, please create an account or re-enter username
+          Passwords don't match, please confirm your password matches
         </Text>
-      )} */}
+      )}
 
       <Pressable
         style={commonStyles.submitButton}

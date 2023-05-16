@@ -44,6 +44,7 @@ const JoinHouseView = (): JSX.Element => {
             houseId: data.id,
           }),
         }).then((response) => {
+          console.log(response);
           if (response.ok) {
             navigate(`/home/${houseCode}`, {
               state: { houseName: data.houseName },

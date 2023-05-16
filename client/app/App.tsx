@@ -7,6 +7,7 @@ import HomePageView from "./components/view/HomePage";
 import CreateHouseView from "./components/HouseViews/CreateHouseView";
 import ViewHome from "./components/appflow/ViewHome";
 import JoinHouseView from "./components/HouseViews/JoinHouseView";
+import HousesView from "./components/HouseViews/HousesView";
 
 export default function App() {
   const [sessionActive, setSessionActive] = useState(false);
@@ -57,6 +58,7 @@ export default function App() {
           path="/mainmenu/createHouse/:userId"
           element={<CreateHouseView />}
         />
+        <Route path="/mainmenu/houses/:userId" element={<HousesView />} />
         <Route path="/home/:houseCode" element={<ViewHome />} />
       </Routes>
     </NativeRouter>

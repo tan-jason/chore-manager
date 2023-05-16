@@ -37,8 +37,7 @@ const CreateHouseView = (): JSX.Element => {
       }),
     })
       .then((response) => {
-        const resStatus = response.status;
-        if (resStatus === 200) {
+        if (response.ok) {
           response.json().then((data) => {
             navigate(`/home/${data.houseCode}`, {
               state: { houseName: houseName },
@@ -80,9 +79,9 @@ const CreateHouseView = (): JSX.Element => {
           <Text style={commonStyles.submitText}>Submit</Text>
         )}
       </Pressable>
-      <Link to={`/mainmenu`}>
-        <Text style={commonStyles.normalText}>Back</Text>
-      </Link>
+      <Text style={commonStyles.normalText} onPress={() => navigate(-1)}>
+        Back
+      </Text>
     </View>
   );
 };

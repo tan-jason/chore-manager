@@ -111,8 +111,18 @@ export const getUserById: RequestHandler = async (
       },
       include: { houses: true, chores: true, housesOwned: true },
     });
+    const houses = user?.houses.map((house) => house.houseId);
+    const houseNames = await prisma.house.findMany({
+      where: {
+        id: { in: houses },
+      },
+      select: {
+        houseName: true,
+        houseCode: true,
+      },
+    });
     if (user) {
-      res.status(200).json(user);
+      res.status(200).json({ user: user, houseNames: houseNames });
     } else {
       res.status(400).json({ message: "user not found" });
     }

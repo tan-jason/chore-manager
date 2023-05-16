@@ -71,6 +71,9 @@ const LoginView = (): JSX.Element => {
           <Text style={commonStyles.submitText}>Submit</Text>
         )}
       </Pressable>
+      <Text style={commonStyles.normalText} onPress={() => navigate(-1)}>
+        Back
+      </Text>
       {incorrectPassword && (
         <Text style={commonStyles.errorText}>Incorrect password</Text>
       )}
