@@ -17,6 +17,11 @@ const CreateUserView = (): JSX.Element => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [nameEmptyError, setNameEmptyError] = useState(false);
+  const [userNameEmptyError, setUserNameEmptyError] = useState(true);
+  const [passwordEmptyError, setPasswordEmptyError] = useState(false);
+  const [confirmPasswordEmptyError, setConfirmPasswordEmptyError] =
+    useState(false);
 
   const navigate = useNavigate();
 
@@ -57,7 +62,7 @@ const CreateUserView = (): JSX.Element => {
           Chore Manager - Create a User
         </Text>
         <View style={styles.entryContainer}>
-          <Text>Name</Text>
+          <Text>Name *</Text>
           <TextInput
             placeholder="Enter your name"
             style={styles.entryInput}
@@ -67,8 +72,10 @@ const CreateUserView = (): JSX.Element => {
           />
         </View>
 
-        <View style={styles.entryContainer}>
-          <Text>Username</Text>
+        <View style={{ ...styles.entryContainer, maxHeight: 95 }}>
+          <View style={{}}>
+            <Text>Username *</Text>
+          </View>
           <TextInput
             placeholder="Enter your username"
             style={styles.entryInput}
@@ -79,24 +86,26 @@ const CreateUserView = (): JSX.Element => {
         </View>
 
         <View style={styles.entryContainer}>
-          <Text>Password</Text>
+          <Text>Password *</Text>
           <TextInput
             placeholder="Enter your password"
             style={styles.entryInput}
             value={password}
             onChangeText={setPassword}
             autoCapitalize="none"
+            secureTextEntry={true}
           />
         </View>
 
         <View style={styles.entryContainer}>
-          <Text>Confirm Password</Text>
+          <Text>Confirm Password *</Text>
           <TextInput
             placeholder="Confirm password"
             style={styles.entryInput}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             autoCapitalize="none"
+            secureTextEntry={true}
           />
         </View>
       </View>

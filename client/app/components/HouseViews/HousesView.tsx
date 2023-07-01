@@ -33,11 +33,14 @@ const HousesView = () => {
     }).then((res) => {
       if (res.ok) {
         res.json().then((data) => {
+          let key: number = 0;
           const housesInfo: any[] = [];
           data.houseNames.forEach((obj: any) => {
-            housesInfo.push(obj);
+            housesInfo.push({ ...obj, key: key });
+            key++;
           });
           setHouses(housesInfo);
+          console.log(houses);
         });
       }
     });

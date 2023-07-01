@@ -49,6 +49,7 @@ export const commonStyles = StyleSheet.create({
     alignSelf: "center",
     marginRight: 20,
     marginTop: 20,
+    flexWrap: "wrap",
   },
   input: {
     height: 40,

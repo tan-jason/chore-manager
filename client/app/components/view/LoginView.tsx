@@ -57,6 +57,7 @@ const LoginView = (): JSX.Element => {
           value={password}
           onChangeText={setPassword}
           autoCapitalize="none"
+          secureTextEntry={true}
         />
       </View>
 
