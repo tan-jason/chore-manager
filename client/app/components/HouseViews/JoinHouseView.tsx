@@ -15,11 +15,14 @@ const JoinHouseView = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [houseCode, setHouseCode] = useState("");
   const [invalidHouseCode, setInvalidHouseCode] = useState(false);
+  const [userInHouseError, setUserInHouseError] = useState(false);
 
   const navigate = useNavigate();
   const { userId } = useParams();
 
   const handleSubmit = async () => {
+    setInvalidHouseCode(false);
+    setUserInHouseError(false);
     if (!houseCode) {
       setInvalidHouseCode(true);
       return;
@@ -33,6 +36,9 @@ const JoinHouseView = (): JSX.Element => {
       },
     }).then((res) => {
       res.json().then((data) => {
+        if (!userId || !data?.id) {
+          setInvalidHouseCode(true);
+        }
         fetch("http://localhost:8080/houseuser", {
           method: "POST",
           headers: {
@@ -48,6 +54,8 @@ const JoinHouseView = (): JSX.Element => {
             navigate(`/home/${houseCode}`, {
               state: { houseName: data.houseName },
             });
+          } else if (response.status === 422) {
+            setUserInHouseError(true);
           }
         });
       });
@@ -72,6 +80,12 @@ const JoinHouseView = (): JSX.Element => {
       {invalidHouseCode && (
         <Text style={{ ...commonStyles.errorText, paddingHorizontal: 20 }}>
           You must enter a valid house code
+        </Text>
+      )}
+
+      {userInHouseError && (
+        <Text style={{ ...commonStyles.errorText, paddingHorizontal: 20 }}>
+          You are already in this house
         </Text>
       )}
 

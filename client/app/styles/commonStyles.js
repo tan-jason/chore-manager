@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+export const ICON_SIZE = 26;
+
 export const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -61,7 +63,7 @@ export const commonStyles = StyleSheet.create({
   linkText: {
     fontSize: 16,
     lineHeight: 21,
-    color: "#3366CC",
+    color: "#3d85c6",
     letterSpacing: 0.25,
     alignSelf: "center",
     marginRight: 20,

@@ -5,9 +5,9 @@ import WelcomeView from "./components/view/WelcomeView";
 import { NativeRouter, Route, Routes } from "react-router-native";
 import HomePageView from "./components/view/HomePage";
 import CreateHouseView from "./components/HouseViews/CreateHouseView";
-import ViewHome from "./components/appflow/ViewHome";
 import JoinHouseView from "./components/HouseViews/JoinHouseView";
 import HousesView from "./components/HouseViews/HousesView";
+import HomeWrapper from "./components/appflow/HomeWrapper";
 
 export default function App() {
   const [sessionActive, setSessionActive] = useState(false);
@@ -59,7 +59,7 @@ export default function App() {
           element={<CreateHouseView />}
         />
         <Route path="/mainmenu/houses/:userId" element={<HousesView />} />
-        <Route path="/home/:houseCode" element={<ViewHome />} />
+        <Route path="/home/:houseCode" element={<HomeWrapper />} />
       </Routes>
     </NativeRouter>
   );

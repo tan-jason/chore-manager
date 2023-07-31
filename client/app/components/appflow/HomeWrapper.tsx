@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  ActivityIndicator,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { useLocation, useParams } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
+import NavigationFooter from "../common/NavigationFooter";
 
-const ViewHome = (): JSX.Element => {
+const HomeWrapper = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
 
   const { houseCode } = useParams();
@@ -23,11 +17,17 @@ const ViewHome = (): JSX.Element => {
           {location.state.houseName}
         </Text>
       </View>
-      {/* {usernotFound && (
-        <Text style={{ ...commonStyles.errorText, paddingHorizontal: 20 }}>
-          User not found, please create an account or re-enter username
-        </Text>
-      )} */}
+      <ScrollView contentContainerStyle={{ alignItems: "flex-start" }}>
+        <View
+          style={{
+            alignSelf: "flex-start",
+            marginLeft: 30,
+          }}
+        >
+          <Text style={commonStyles.linkText}>+ Add chore</Text>
+        </View>
+      </ScrollView>
+      <NavigationFooter />
     </View>
   );
 };
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewHome;
+export default HomeWrapper;

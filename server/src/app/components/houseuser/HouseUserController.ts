@@ -9,6 +9,20 @@ export const createHouseUser: RequestHandler = async (
 ) => {
   try {
     const { userId, houseId } = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: String(userId),
+      },
+      include: { houses: true, chores: true, housesOwned: true },
+    });
+    const isUserInHouse = user?.houses.filter(
+      (house) => house.houseId === Number(houseId)
+    );
+    if (isUserInHouse?.length) {
+      res.status(422).json({ message: "user already in house" });
+      return;
+    }
     await prisma.houseUser.create({
       data: {
         houseId: Number(houseId),

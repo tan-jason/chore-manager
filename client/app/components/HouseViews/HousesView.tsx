@@ -4,12 +4,13 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
   ScrollView,
+  LogBox,
 } from "react-native";
 import { commonStyles } from "../../styles/commonStyles";
 import { useNavigate, useParams } from "react-router-native";
 
+LogBox.ignoreAllLogs();
 const HousesView = () => {
   const [houses, setHouses] = useState([{}]);
 
@@ -40,7 +41,6 @@ const HousesView = () => {
             key++;
           });
           setHouses(housesInfo);
-          console.log(houses);
         });
       }
     });
@@ -78,7 +78,7 @@ const HousesView = () => {
         </View>
       </ScrollView>
       <Text
-        style={{ ...commonStyles.normalText, paddingBottom: 20 }}
+        style={{ ...commonStyles.normalText, paddingBottom: 40 }}
         onPress={() => navigate(-1)}
       >
         Back
