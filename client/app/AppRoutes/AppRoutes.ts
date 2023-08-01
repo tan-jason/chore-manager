@@ -47,3 +47,13 @@ export const addUserToHouse = async (userId: string, houseCode: string) => {
     });
   });
 };
+
+export const getAllHouseChores = async (houseCode: string) => {
+  fetch(`http://localhost:8080/houses/v1/${houseCode}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json().then((data) => data.chores));
+};

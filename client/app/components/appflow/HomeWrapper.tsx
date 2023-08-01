@@ -3,13 +3,19 @@ import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { useLocation, useParams } from "react-router-native";
 import { commonStyles } from "../../styles/commonStyles";
 import NavigationFooter from "../common/NavigationFooter";
+import { getAllHouseChores } from "../../AppRoutes/AppRoutes";
 
 const HomeWrapper = (): JSX.Element => {
-  const [loading, setLoading] = useState(false);
+  const [houseChores, setHouseChores] = useState([]);
 
   const { houseCode } = useParams();
   const location = useLocation();
 
+  useEffect(() => {
+    const allHouseChores = getAllHouseChores(location.state.houseCode) ?? [];
+    console.log(allHouseChores);
+    setHouseChores(allHouseChores);
+  }, []);
   return (
     <View style={commonStyles.container}>
       <View style={styles.welcomeContainer}>

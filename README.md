@@ -16,10 +16,13 @@ Login as existing user
 ![](README_IMAGES/loginView.gif)
 
 Create a House
+
 ![](README_IMAGES/createHouseFlow.gif)
 
 Join a House
+
 ![](README_IMAGES/joinHouseFlow.gif)
 
 View Houses
+
 ![](README_IMAGES/viewHouses.gif)

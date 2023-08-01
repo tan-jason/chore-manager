@@ -20,7 +20,7 @@ const HousesView = () => {
 
   const handleClickHouse = (house: any) => {
     navigate(`/home/${house.houseCode}`, {
-      state: { houseName: house.houseName },
+      state: { houseName: house.houseName, houseCode: house.houseCode },
     });
   };
 

@@ -40,7 +40,7 @@ const CreateHouseView = (): JSX.Element => {
         if (response.ok) {
           response.json().then((data) => {
             navigate(`/home/${data.houseCode}`, {
-              state: { houseName: houseName },
+              state: { houseName: houseName, houseCode: data.houseCode },
             });
           });
         }
