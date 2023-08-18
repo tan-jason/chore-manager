@@ -8,6 +8,8 @@ import CreateHouseView from "./components/HouseViews/CreateHouseView";
 import JoinHouseView from "./components/HouseViews/JoinHouseView";
 import HousesView from "./components/HouseViews/HousesView";
 import HomeWrapper from "./components/appflow/HomeWrapper";
+import ChoreView from "./components/appflow/chores/ChoreView";
+import CreateChoreView from "./components/appflow/chores/CreateChoreView";
 
 export default function App() {
   const [sessionActive, setSessionActive] = useState(false);
@@ -60,6 +62,8 @@ export default function App() {
         />
         <Route path="/mainmenu/houses/:userId" element={<HousesView />} />
         <Route path="/home/:houseCode" element={<HomeWrapper />} />
+        <Route path="/home/chores" element={<ChoreView />} />
+        <Route path="/home/createChore" element={<CreateChoreView />} />
       </Routes>
     </NativeRouter>
   );

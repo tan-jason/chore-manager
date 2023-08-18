@@ -49,11 +49,52 @@ export const addUserToHouse = async (userId: string, houseCode: string) => {
 };
 
 export const getAllHouseChores = async (houseCode: string) => {
-  fetch(`http://localhost:8080/houses/v1/${houseCode}`, {
+  return fetch(`http://localhost:8080/houses/v1/${houseCode}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   }).then((res) => res.json().then((data) => data.chores));
+};
+
+const verifyUser = async (userId: string | null | undefined) => {
+  if (!userId) {
+    return false;
+  }
+  return fetch(`http://localhost:8080/users/${userId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.ok);
+};
+
+export const createChore = async (
+  houseId: number,
+  choreTitle: string,
+  userId?: string | null,
+  time?: Date | null
+) => {
+  console.log(houseId);
+  return fetch("http://localhost:8080/chores", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: choreTitle,
+      houseId: houseId,
+      userId: (await verifyUser(userId)) ? userId : null,
+      time: time,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json().then((data) => data);
+    } else {
+      return false;
+    }
+  });
 };

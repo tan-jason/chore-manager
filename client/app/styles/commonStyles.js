@@ -78,4 +78,20 @@ export const commonStyles = StyleSheet.create({
     marginRight: 20,
     marginTop: 20,
   },
+  choreText: {
+    fontSize: 20,
+    lineHeight: 21,
+    color: "black",
+    letterSpacing: 0.25,
+    alignSelf: "flex-start",
+    paddingLeft: 20,
+    paddingTop: 20,
+  },
+  choreContainer: {
+    width: "100%",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    flex: 1,
+    flexDirection: "row",
+  },
 });

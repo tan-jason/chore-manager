@@ -52,7 +52,12 @@ const JoinHouseView = (): JSX.Element => {
         }).then((response) => {
           if (response.ok) {
             navigate(`/home/${houseCode}`, {
-              state: { houseName: data.houseName, houseCode: data.houseCode },
+              state: {
+                houseName: data.houseName,
+                houseCode: data.houseCode,
+                userId: userId,
+                houseId: data.id,
+              },
             });
           } else if (response.status === 422) {
             setUserInHouseError(true);

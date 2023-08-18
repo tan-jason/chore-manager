@@ -119,6 +119,7 @@ export const getUserById: RequestHandler = async (
       select: {
         houseName: true,
         houseCode: true,
+        id: true,
       },
     });
     if (user) {

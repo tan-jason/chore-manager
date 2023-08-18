@@ -2315,6 +2315,14 @@
   "resolved" "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz"
   "version" "1.2.4"
 
+"@types/react-native-check-box@^2.1.2":
+  "integrity" "sha512-FQJg++wp/zYEM/eyAy71SYKmQuHhITJjNHqNuCMmJI13y6uscC/YvCYjBEvOCdul7xkMhC2XuMuqE040ei1e6Q=="
+  "resolved" "https://registry.npmjs.org/@types/react-native-check-box/-/react-native-check-box-2.1.2.tgz"
+  "version" "2.1.2"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-vector-icons@^6.4.13":
   "integrity" "sha512-1PqFoKuXTSzMHwGMAr+REdYJBQAbe9xrww3ecZR0FsHcD1K+vGS/rxuAriL4rsI6+p69sZQjDzpEVAbDQcjSwA=="
   "resolved" "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.13.tgz"
@@ -2323,17 +2331,17 @@
     "@types/react" "*"
     "@types/react-native" "^0.70"
 
+"@types/react-native@*", "@types/react-native@^0.71.3":
+  "integrity" "sha512-0Uqw1YZ0qbVla0MMWFTANFm6W8KYWNvGQmYfucdecbXivLMcQ2v4PovuYFKr7bE6Bc5nDCUEaga962Y8gcDF7A=="
+  "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.71.3.tgz"
+  "version" "0.71.3"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native@^0.70":
   "integrity" "sha512-Kwc+BYBrnDqvacNxKp1UtcZJnJJnTih2NYmi/ieAKlHdxEPN6sYMwmIwgHdoLHggvml6bf3DYRaH2jt+gzaLjw=="
   "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.70.14.tgz"
   "version" "0.70.14"
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-native@^0.71.3":
-  "integrity" "sha512-0Uqw1YZ0qbVla0MMWFTANFm6W8KYWNvGQmYfucdecbXivLMcQ2v4PovuYFKr7bE6Bc5nDCUEaga962Y8gcDF7A=="
-  "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.71.3.tgz"
-  "version" "0.71.3"
   dependencies:
     "@types/react" "*"
 
@@ -8179,7 +8187,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@*", "prop-types@^15.7.2":
+"prop-types@*", "prop-types@^15.5.7", "prop-types@^15.7.2":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -8341,6 +8349,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
 
+"react-native-check-box@^2.1.7":
+  "integrity" "sha512-dPVOoz4jKs2je2HSHp7+XJXNyZFq8Kij7IHutigrQKzB550Dko6ZAQu/1mG1FzdUMFxxkZ2nX59KmbR0Co0T8Q=="
+  "resolved" "https://registry.npmjs.org/react-native-check-box/-/react-native-check-box-2.1.7.tgz"
+  "version" "2.1.7"
+  dependencies:
+    "prop-types" "^15.5.7"
+
 "react-native-codegen@^0.71.5":
   "integrity" "sha512-rfsuc0zkuUuMjFnrT55I1mDZ+pBRp2zAiRwxck3m6qeGJBGK5OV5JH66eDQ4aa+3m0of316CqrJDRzVlYufzIg=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.71.5.tgz"
@@ -8404,7 +8419,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native@*", "react-native@^0.71.3", "react-native@>=0.44":
+"react-native@*", "react-native@^0.71.3", "react-native@>=0.20.0", "react-native@>=0.44":
   "integrity" "sha512-RYJXCcQGa4NTfKiPgl92eRDUuQ6JGDnHqFEzRwJSqEx9lWvlvRRIebstJfurzPDKLQWQrvITR7aI7e09E25mLw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.71.3.tgz"
   "version" "0.71.3"
